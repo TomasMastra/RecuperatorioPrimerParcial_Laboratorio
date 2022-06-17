@@ -224,8 +224,7 @@ int ConfirmarProducto(char* message)
 
 int BuscarProductoID(eServicio servicio[], int tamServicio, int id)
 {
-	int ret;
-
+	int ret = EMPTY;
 	int i;
 
 	for(i=0;i<tamServicio;i++)
@@ -265,6 +264,9 @@ void EliminarServicio(eServicio servicio[], int tamServicio)
 
 				}
 
+		}else
+		{
+			printf("Ese servicio no existe!!!\n");
 		}
 }
 
@@ -385,12 +387,9 @@ void SumarCotizacionesCambioAceite(eServicio servicio[], int tamServicio)
 	{
 			if(servicio[i].idServicio != EMPTY)
 			{
-				if(servicio[i].fecha.anio == 2023 && servicio[i].fecha.mes == 1 && servicio[i].fecha.dia == 26)
+				if(servicio[i].fecha.anio == 2023 && servicio[i].fecha.mes == 1 && servicio[i].fecha.dia == 26 && servicio[i].diagnostico == 1)
 				{
-					if(servicio[i].diagnostico == 1)
-					{
 						acumulador = acumulador + servicio[i].cotizacion;
-					}
 				}
 			}
 

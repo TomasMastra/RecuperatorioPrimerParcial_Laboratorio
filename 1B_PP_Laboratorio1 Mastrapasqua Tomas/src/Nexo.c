@@ -134,7 +134,8 @@ void MostrarSubMenu(eServicio servicio[], eMecanico mecanico[], int tamServicio,
 											 	    				 "8. SERVICIOS ORDENADOS POR ESPECIALIDAD DEL MECANICO\n"
 																	 "9. LISTADO DE SERVICIOS ENTRE MARZO Y MAYO DEL 2022 PARA ESPECIALIDAD DE SUSPENCION\n"//ESPECIALIDAD DEL MECANICO, NO DIAGNOSTICO
 											 	    				 "10. PORCENTAJE DE SERVICIOS DIAGNOSTICADOS QUE ATIENDE CADA MECANICO\n"
-																	 "11. VOLVER AL MENU PRINCIPAL\n"
+																	 "11. ESPECIALIDADES MAS ESTUDIADAS\n"
+				 	 	 	 	 	 	 	 	 	 	 	 	 	 "12. VOLVER AL MENU PRINCIPAL\n"
 
 							 	    								 "-------------------------------------\n",
 							 	    								 "Ingrese una opcion: "
@@ -149,9 +150,11 @@ void MostrarSubMenu(eServicio servicio[], eMecanico mecanico[], int tamServicio,
 																	 "8. SERVICIOS ORDENADOS POR ESPECIALIDAD DEL MECANICO\n"
 																	 "9. LISTADO DE SERVICIOS ENTRE MARZO Y MAYO DEL 2022 PARA ESPECIALIDAD DE SUSPENCION\n"
 																	 "10. PORCENTAJE DE SERVICIOS DIAGNOSTICADOS QUE ATIENDE CADA MECANICO\n"
-																	 "11. VOLVER AL MENU PRINCIPAL\n"
+																	 "11. ESPECIALIDADES MAS ESTUDIADAS\n"
+																	 "12. VOLVER AL MENU PRINCIPAL\n"
+
 							 	    								 "-------------------------------------\n"
-							 	    								 "ERROR, Ingrese una opcion: ", 1, 11);
+							 	    								 "ERROR, Ingrese una opcion: ", 1, 12);
 
 		validar =  ValidarServicio(servicio,  tamServicio);
 
@@ -254,10 +257,16 @@ void MostrarSubMenu(eServicio servicio[], eMecanico mecanico[], int tamServicio,
 			}
 
 						break;
-			}
+
+		case 11:
+
+			CalcularEspecialidadesEstudiadas(mecanico,  tamMecanico, especialidad,  tamEspecialidad);
+
+			break;
+		}
 
 
-		}while(option!=11);
+		}while(option!=12);
 
 }
 
@@ -332,7 +341,7 @@ void ModificarServicio(eServicio servicio[], eMecanico mecanico[], int tamServic
 		}
 	}else
 	{
-		printf("No existe ese ID");
+		printf("No existe ese ID\n");
 	}
 
 
@@ -421,6 +430,7 @@ void ListarMecanicos(eMecanico mecanico[], int tamMecanico, eEspecialidad especi
 	for(i=0;i<tamMecanico;i++)
 	{
 		j = CompararMecanicoEspecialidad(especialidad, mecanico, tamEspecialidad,  i);
+
 			if(j!= -1)
 			{
 					ListarMecanico(mecanico[i], especialidad[j]);
@@ -586,7 +596,7 @@ int BuscarCantidadServiciosPorMecanico(eServicio servicio[], eMecanico mecanico[
 	contador = 0;
 	for(i=0;i<tamServicio;i++)
 	{
-		if( mecanico[index].id == servicio[i].idMecanico && mecanico[index].isEmpty!=EMPTY)
+		if( mecanico[index].id == servicio[i].idMecanico && servicio[i].isEmptyMecanico!=EMPTY && mecanico[index].isEmpty!=EMPTY)
 		{
 			contador++;
 		}
@@ -604,7 +614,7 @@ int SumarCotizacionesServiciosPorMecanico(eServicio servicio[], eMecanico mecani
 	acumulador = 0;
 		for(i=0;i<tamServicio;i++)
 		{
-			if( mecanico[index].id == servicio[i].idMecanico && mecanico[index].isEmpty!=EMPTY)
+			if( mecanico[index].id == servicio[i].idMecanico && mecanico[index].isEmpty!=EMPTY && servicio[i].isEmptyMecanico!=EMPTY)
 			{
 				acumulador=acumulador+servicio[i].cotizacion;
 			}
@@ -657,6 +667,7 @@ void ListarServiciosEntreMayoyMarzo2022(eServicio servicio[], eMecanico mecanico
 
 				j=CompararServicioMecanico(mecanico, servicio, tamMecanico, i);
 				k=CompararMecanicoEspecialidad(especialidad, mecanico, tamEspecialidad, j);
+
 
 				if(j!=-1 && k!=-1)
 				{
@@ -871,6 +882,56 @@ int validarMecanicoDiagnosticado(eServicio servicio[], eMecanico mecanico[], int
 
 
 	return ret;
+}
+
+void CalcularEspecialidadesEstudiadas(eMecanico mecanico[], int tamMecanico, eEspecialidad especialidad[], int tamEspecialidad)
+{
+	int i;
+
+	for(i=0;i<tamEspecialidad;i++)
+	{
+		especialidad[i].cantidad=BuscarCantidadEspecialidad(mecanico,tamMecanico,especialidad,i);
+
+
+	}
+
+	ordenarPorCantidad(especialidad,  tamEspecialidad);
+	MostrarEspecialidadesMasEstudiadas(especialidad,  tamEspecialidad);
+
+}
+
+int BuscarCantidadEspecialidad(eMecanico mecanico[],int tamMecanico, eEspecialidad especialidad[], int index)
+{
+	int i;
+	int contador;
+
+	contador=0;
+	for(i=0;i<tamMecanico;i++)
+	{
+		if(mecanico[i].especialidad == especialidad[index].idEspecialidad)
+		{
+			contador++;
+		}
+	}
+
+	return contador;
+
+}
+
+void MostrarEspecialidadesMasEstudiadas(eEspecialidad especialidad[], int tamEspecialidad)
+{
+
+	int i;
+
+	printf("Especialidades mas estudiadas: \n");
+	for(i=0;i<tamEspecialidad;i++)
+	{
+		if(especialidad[i].idEspecialidad>0)
+		{
+			printf("%d. %s\n",i+1,especialidad[i].especialidad);
+		}
+	}
+
 }
 
 

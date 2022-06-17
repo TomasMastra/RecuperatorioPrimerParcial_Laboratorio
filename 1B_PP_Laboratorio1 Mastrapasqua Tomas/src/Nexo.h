@@ -250,7 +250,15 @@ void AsignarIdMeacnico(eServicio servicio[], eMecanico mecanico[],int tamServici
 int validarMecanicoDiagnosticado(eServicio servicio[], eMecanico mecanico[], int index, int tamMecanico);
 
 
-
+/** \brief busca cuantos servicios tiene un mecanico. Recorre los servicios y si el id del mecanico de la posición que le paso es igual al id mecanico de un servicio sumo el contador
+*
+* \param servicio eServicio[]
+* \param mecanico eMecanico[]
+* \param index int
+* \param tamServicio int
+* \return int contador (cantidad de servicios   * \diagnosticados que tiene un mecanico)
+*
+*/
 int BuscarCantidadServiciosPorMecanico(eServicio servicio[], eMecanico mecanico[],int tamServicio ,int index);
 
 /** \brief Suma las cotizaciones de un mecanico en especifico, recorre un for con los servicios y busca si un id mecanico de un servicio es igual al id del mecanico de la posición index que le paso
@@ -262,8 +270,30 @@ int BuscarCantidadServiciosPorMecanico(eServicio servicio[], eMecanico mecanico[
 * \return int acumulador (suma de cotización de * \un mecanico)
 *
 */
-
 int SumarCotizacionesServiciosPorMecanico(eServicio servicio[], eMecanico mecanico[],int tamServicio ,int index);
+
+/** \brief Busca la cantidad de mecanicos que estudiaron cada especialidad y las ordena de manera que la mas estudiada sea la primera y la menos estudiada la ultima
+*
+* \param mecanico eMecanico[]
+* \param especialidad eEspecialidad[]
+* \param tamMecanico int
+* \param tamEspecialidad int
+* \return int acumulador (suma de cotización de * \un mecanico)
+*
+*/
+void CalcularEspecialidadesEstudiadas(eMecanico mecanico[], int tamMecanico, eEspecialidad especialidad[], int tamEspecialidad);
+
+
+
+/** \brief Busca cuantos mecanicos estudiaron esa especialidad, le paso la especialidad, comparo y voy sumando un contador
+* \param servicio eServicio[]
+* \param mecanico eMecanico[]
+* \param index int
+* \param tamMecanico int
+* \return int contador (cantidad de mecanicos que estudiaron esa especialidad)
+*
+*/
+int BuscarCantidadEspecialidad(eMecanico mecanico[],int tamMecanico, eEspecialidad especialidad[],int index);
 
 
 #endif /* NEXO_H_ */

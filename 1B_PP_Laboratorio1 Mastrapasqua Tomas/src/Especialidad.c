@@ -38,5 +38,26 @@ void harcodeoEspecialidad(eEspecialidad especialidad[], int tamEspecialidad)
 
 }
 
+void ordenarPorCantidad(eEspecialidad especialidad[], int tamEspecialidad)
+{
+	int i;
+		int j;
+		eEspecialidad auxEspecialidad;
+
+		for(i=0;i<tamEspecialidad-1;i++)
+		{
+			for(j=i+1;j<tamEspecialidad;j++)
+			{
+				if(especialidad[i].cantidad < especialidad[j].cantidad)
+				{
+					auxEspecialidad = especialidad[i];
+					especialidad[i] = especialidad[j];
+					especialidad[j] = auxEspecialidad;
+				}
+			}
+
+		}
+}
+
 
 #endif /* ESPECIALIDAD_C_ */

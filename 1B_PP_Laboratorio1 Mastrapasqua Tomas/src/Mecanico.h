@@ -15,7 +15,6 @@ typedef struct
 
 	int id;
 	char nombre[51];
-	//char especialidad[21];
 	int especialidad;
 	int isEmpty;
 
